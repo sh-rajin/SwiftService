@@ -1,0 +1,11 @@
+/* সব section hidden থাকবে */
+main section {
+  display: none;
+}
+
+/* শুধু যেটা target সেটাই দেখবে */
+main section:target {
+  display: block;
+}
+
+
