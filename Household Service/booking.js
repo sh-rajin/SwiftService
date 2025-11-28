@@ -90,9 +90,13 @@ const handleBooking = (event) => {
         if (data.checkout_url) {
           window.location.href = data.checkout_url;
           return;
-        } else {
-          alert("Booking failed. Please try again.");
         }
+        if (data.id) {
+          alert("Your booking has been placed successfully with cash payment.");
+          window.location.href = "booking-success.html";
+          return;
+        } 
+        alert("Booking failed. Please try again.");
       });
         
 }
