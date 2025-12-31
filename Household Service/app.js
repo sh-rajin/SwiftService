@@ -1,19 +1,19 @@
 const loadServicesCategories = () => {
-  fetch("http://127.0.0.1:8000/services/")
+  fetch("https://swiftservice-api.onrender.com/services/")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
       displayServices(data);
     });
 
-  fetch("http://127.0.0.1:8000/services/top-rated/")
+  fetch("https://swiftservice-api.onrender.com/services/top-rated/")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
       displayTopServices(data);
     });
 
-  fetch("http://127.0.0.1:8000/categories/")
+  fetch("https://swiftservice-api.onrender.com/categories/")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
@@ -155,7 +155,7 @@ const displayCategories = (categories) => {
 const handleSearch = () => {
   const query = document.getElementById("search-input").value;
   document.getElementById("search-input").value = "";
-  fetch(`http://127.0.0.1:8000/services/?search=${query}`)
+  fetch(`https://swiftservice-api.onrender.com/services/?search=${query}`)
     .then((res) => res.json())
     .then((data) => {
       document.getElementById("services").innerHTML = "";

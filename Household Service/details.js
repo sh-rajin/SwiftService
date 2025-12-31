@@ -2,7 +2,7 @@ const serviceDetails = () => {
     const param = new URLSearchParams(window.location.search).get("serviceId");
     console.log(param);
 
-    fetch(`http://127.0.0.1:8000/services/${param}/`)
+    fetch(`https://swiftservice-api.onrender.com/services/${param}/`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

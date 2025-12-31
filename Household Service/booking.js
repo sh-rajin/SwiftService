@@ -3,7 +3,7 @@ const serviceId = new URLSearchParams(window.location.search).get("serviceId");
 const bookingservice = () => {
   console.log(serviceId);
 
-  fetch(`http://127.0.0.1:8000/services/${serviceId}/`)
+  fetch(`https://swiftservice-api.onrender.com/services/${serviceId}/`)
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
@@ -75,7 +75,7 @@ const handleBooking = (event) => {
         return;
     }
 
-    fetch("http://127.0.0.1:8000/bookings/", {
+    fetch("https://swiftservice-api.onrender.com/bookings/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

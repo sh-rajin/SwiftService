@@ -1,8 +1,8 @@
-const baseUrl = "http://127.0.0.1:8000/"
+const baseUrl = "https://swiftservice-api.onrender.com/"
 const getValue = (id) => document.getElementById(id).value;
 
 const dashboardData = () => {
-  fetch("http://127.0.0.1:8000/auth/users/")
+  fetch("https://swiftservice-api.onrender.com/auth/users/")
     .then((res) => res.json())
     .then((data) => {
       // console.log(data);
@@ -37,7 +37,7 @@ const dashboardData = () => {
     
     
     
-  fetch("http://127.0.0.1:8000/customers/")
+  fetch("https://swiftservice-api.onrender.com/customers/")
     .then((res) => res.json())
     .then((data) => {
       // console.log(data);
@@ -69,7 +69,7 @@ const dashboardData = () => {
       console.error("Error fetching customer data:", error);
     });
 
-  fetch("http://127.0.0.1:8000/services/")
+  fetch("https://swiftservice-api.onrender.com/services/")
     .then((res) => res.json())
     .then((data) => {
       //   console.log(data);
@@ -122,7 +122,7 @@ const dashboardData = () => {
       console.error("Error fetching service data:", error);
     });
     
-  fetch("http://127.0.0.1:8000/categories/")
+  fetch("https://swiftservice-api.onrender.com/categories/")
     .then((res) => res.json())
     .then((data) => {
       //   console.log(data);
@@ -179,7 +179,7 @@ const dashboardData = () => {
       console.error("Error fetching category data:", error);
     });
     
-  fetch("http://127.0.0.1:8000/reviews/")
+  fetch("https://swiftservice-api.onrender.com/reviews/")
     .then((res) => res.json())
     .then((data) => {
       //   console.log(data);
@@ -225,7 +225,7 @@ const dashboardData = () => {
       console.error("Error fetching reviews data:", error);
     });
     
-  fetch("http://127.0.0.1:8000/bookings/list/")
+  fetch("https://swiftservice-api.onrender.com/bookings/list/")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
@@ -271,7 +271,7 @@ const dashboardData = () => {
 
 const handleUserDelete = (userId) => {
   const id = parseInt(userId);
-  fetch(`http://127.0.0.1:8000/auth/users/${id}/`, {
+  fetch(`https://swiftservice-api.onrender.com/auth/users/${id}/`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
@@ -293,7 +293,7 @@ const handleUserDelete = (userId) => {
 
 const handleServiceSearch = () => {
   const query = document.getElementById("search-services").value;
-  fetch(`http://127.0.0.1:8000/services/?search=${query}`)
+  fetch(`https://swiftservice-api.onrender.com/services/?search=${query}`)
     .then((res) => res.json())
     .then((data) => {
 
@@ -366,7 +366,7 @@ const handleServiceEdit = (event) => {
   formdata.append("price", getValue("edit-service-price"));
   formdata.append("duration", getValue("edit-service-duration"));
 
-  fetch(`http://127.0.0.1:8000/services/${id}/`, {
+  fetch(`https://swiftservice-api.onrender.com/services/${id}/`, {
     method: "PUT",
     body : formdata,
   })
@@ -380,7 +380,7 @@ const handleServiceEdit = (event) => {
 
 const handleServiceDelete = (serviceId) => {
   const id = parseInt(serviceId);
-  fetch(`http://127.0.0.1:8000/services/${id}/`, {
+  fetch(`https://swiftservice-api.onrender.com/services/${id}/`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json"
@@ -402,7 +402,7 @@ const handleServiceDelete = (serviceId) => {
 const handleCategorySearch = (event) => {
   event.preventDefault()
   const query = document.getElementById("search-categories").value;
-  fetch(`http://127.0.0.1:8000/categories/?search=${query}`)
+  fetch(`https://swiftservice-api.onrender.com/categories/?search=${query}`)
     .then((res) => res.json())
     .then((data) => {
       const parent = document.getElementById("category-table-body");
@@ -461,7 +461,7 @@ const handleCategoryEdit = (event) => {
   formdata.append('name', getValue("edit-cat-name"));
   formdata.append('description', getValue("edit-cat-description"));
 
-  fetch(`http://127.0.0.1:8000/categories/${id}/`, {
+  fetch(`https://swiftservice-api.onrender.com/categories/${id}/`, {
     method: "PUT",
     body : formdata,
   })
@@ -475,7 +475,7 @@ const handleCategoryEdit = (event) => {
 const handleCategoryDelete = (categoryId) => {
   // console.log(categoryId)
   const id = parseInt(categoryId);
-  fetch(`http://127.0.0.1:8000/categories/${id}/`, {
+  fetch(`https://swiftservice-api.onrender.com/categories/${id}/`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
@@ -498,7 +498,7 @@ const handleCategoryDelete = (categoryId) => {
 const handleBookingsSearch = (event) => {
   event.preventDefault();
   const query = document.getElementById("search-bookings").value;
-  fetch(`http://127.0.0.1:8000/bookings/list/?search=${query}`)
+  fetch(`https://swiftservice-api.onrender.com/bookings/list/?search=${query}`)
     .then((res) => res.json())
     .then((data) => {
       const parent = document.getElementById("booking-table-body");
@@ -524,8 +524,17 @@ const handleBookingsSearch = (event) => {
     });
 };
 
+if (localStorage.getItem("token") && localStorage.getItem("admin")) {
+    dashboardData();
+}
+else if (localStorage.getItem("token") && localStorage.getItem("customer")) {
+    window.location.href = "customer-dashboard.html";
+}
+else {
+    window.location.href = "login.html";
+}
 
-dashboardData()
+
 
 
 
@@ -551,7 +560,7 @@ const handleAddService = (event) => {
   formdata.append("price", getValue("price"));
   formdata.append("duration", getValue("duration"));
 
-  fetch("http://127.0.0.1:8000/services/", {
+  fetch("https://swiftservice-api.onrender.com/services/", {
     method: "POST",
     body: formdata,
   })
@@ -589,7 +598,7 @@ const handleAddCategory = (event) => {
   formdata.append("name", getValue("cat-name"));
   formdata.append("description", getValue("cat-description"));
 
-  fetch("http://127.0.0.1:8000/categories/", {
+  fetch("https://swiftservice-api.onrender.com/categories/", {
     method: "POST",
     body: formdata,
   })
