@@ -524,10 +524,13 @@ const handleBookingsSearch = (event) => {
     });
 };
 
-if (localStorage.getItem("token") && localStorage.getItem("admin")) {
+console.log(localStorage.getItem("token"));
+console.log(localStorage.getItem("role"));
+
+if (localStorage.getItem("token") && localStorage.getItem("role") === "admin") {
     dashboardData();
 }
-else if (localStorage.getItem("token") && localStorage.getItem("customer")) {
+else if (localStorage.getItem("token") && localStorage.getItem("role") === "customer") {
     window.location.href = "customer-dashboard.html";
 }
 else {

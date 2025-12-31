@@ -1,3 +1,4 @@
+
 // alert()
 document.addEventListener("DOMContentLoaded", function () {
   const auth_button = document.getElementById("auth-button");
@@ -19,22 +20,25 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+
 const handleProfile = (event) => {
   event.preventDefault();
-  if (localStorage.getItem("role") === "customer") {
-    window.location.href = "customer_dashboard.html";
-  } else {
+  if (localStorage.getItem('role') === 'admin') {
     window.location.href = "admin_dashboard.html";
   }
-};
+  else {
+    window.location.href = "customer_dashboard.html";
+  }
+}
+
 
 // // auth.js
 const handleRegistration = (event) => {
-  event.preventDefault();
-  if (localStorage.getItem("token")) {
-    alert("You are already logged in.");
-    window.location.href = "index.html";
-  }
+  event.preventDefault(); 
+if (localStorage.getItem("token")) {
+  alert("You are already logged in.");
+  window.location.href = "index.html";
+}
 
   const getValue = (id) => document.getElementById(id).value;
 
@@ -47,11 +51,13 @@ const handleRegistration = (event) => {
   const password = getValue("password");
   const confirm_password = getValue("confirm_password");
 
+
   if (password !== confirm_password) {
     alert("Passwords do not match!");
     return;
   }
 
+ 
   const info = {
     username,
     first_name,
@@ -60,7 +66,7 @@ const handleRegistration = (event) => {
     phone,
     address,
     password,
-    confirm_password,
+    confirm_password
   };
 
   console.log("Sending registration data:", info);
@@ -75,9 +81,7 @@ const handleRegistration = (event) => {
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      alert(
-        "Registration successful! Please check your email to verify your account."
-      );
+      alert("Registration successful! Please check your email to verify your account.");
       document.getElementById("registration-form").reset();
       window.location.href = "login.html";
     })
@@ -86,6 +90,8 @@ const handleRegistration = (event) => {
       alert("Registration failed. Please try again later.");
     });
 };
+
+
 
 const handleLogin = (event) => {
   event.preventDefault();
@@ -98,6 +104,7 @@ const handleLogin = (event) => {
 
   const username = getValue("username");
   const password = getValue("password");
+
 
   const info = {
     username,
@@ -122,22 +129,26 @@ const handleLogin = (event) => {
       localStorage.setItem("user_id", data.user_id);
       if (data.token && data.customer_id) {
         localStorage.setItem("customer_id", data.customer_id);
-        localStorage.setItem("role", "customer");
+        localStorage.setItem('role', 'customer');
         alert("Login successful!");
         document.getElementById("login-form").reset();
         window.location.href = "customer_dashboard.html";
-      } else if (data.token) {
-        localStorage.setItem("role", "admin");
+      }
+      else if (data.token) {
+        localStorage.setItem('role', 'admin');
         alert("Login successful!");
         document.getElementById("login-form").reset();
         window.location.href = "admin_dashboard.html";
-      } else {
+      }
+      else {
         alert(data.error);
         document.getElementById("login-form").reset();
         window.location.href = "login.html";
       }
-    });
+    })
 };
+
+
 
 const handleLogout = (event) => {
   event.preventDefault();
@@ -147,15 +158,20 @@ const handleLogout = (event) => {
     headers: {
       "Content-Type": "application/json",
     },
+
   })
     .then((res) => res.json())
     .then((data) => {
       // console.log(data);
       localStorage.clear();
-      alert("Logout successful!");
+      alert(
+        "Logout successful!"
+      );
       window.location.href = "index.html";
-    });
-};
+    })
+}
+
+
 
 const handleChangePassword = (event) => {
   event.preventDefault();
@@ -170,16 +186,16 @@ const handleChangePassword = (event) => {
   const info = {
     old_password,
     new_password,
-    confirm_password,
+    confirm_password
   };
   console.log("Sending change password data:", info);
   fetch("https://swiftservice-api.onrender.com/auth/change-password/", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Token ${localStorage.getItem("token")}`,
+      "Authorization": `Token ${localStorage.getItem("token")}`,
     },
-    body: JSON.stringify(info),
+    body: JSON.stringify(info),  
   })
     .then((res) => res.json())
     .then((data) => {
@@ -192,4 +208,4 @@ const handleChangePassword = (event) => {
       console.error("Change password error:", error);
       alert("Password change failed. Please try again later.");
     });
-};
+}
